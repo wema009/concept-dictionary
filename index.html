@@ -232,164 +232,136 @@ tabindex="0" role="button" aria-label="Kant">
 すべてが同じ種類の関係や直接的な派生関係を意味するわけではありません。
 </p>
 
-<script>
-const data = {
-vernunft: {
-name:"Vernunft",
-translation:"理性",
-proposal:"統合理性（試案）",
-meaning:"個別の認識を超え、認識の全体的な関係や原理を考える能力。",
-history:"カントでは、悟性による認識をさらに統一し、無条件的なものを求める能力。ヘーゲルでは、悟性の固定的な区別を超えて、対立や矛盾を含む全体を把握する理性的な働きとして論じられる。",
-related:"Verstand / Begriff / Urteil",
-field:"ドイツ観念論"
-},
-verstand: {
-name:"Verstand",
-translation:"悟性",
-proposal:"分析知性（試案）",
-meaning:"対象を区別し、規定し、概念やカテゴリーによって理解する能力。",
-history:"カントでは感性的直観をカテゴリーによって統一する認識能力。ヘーゲルでは、物事を区別し固定する思考の働きとして、理性との対比で論じられる。",
-related:"Vernunft / Urteil / Begriff",
-field:"認識論・ドイツ観念論"
-},
-begriff: {
-name:"Begriff",
-translation:"概念",
-proposal:"既存訳を基本とする",
-meaning:"対象を単に名指すだけでなく、対象を理解するための規定や把握の形式。",
-history:"カントでは悟性の概念が認識に関わる。ヘーゲルでは概念は思考の根本的な構造であり、普遍・特殊・個別の統一として展開される。",
-related:"Vernunft / Verstand / Urteil",
-field:"論理学・ドイツ観念論"
-},
-urteil: {
-name:"Urteil",
-translation:"判断",
-proposal:"既存訳を基本とする",
-meaning:"概念を結びつけたり、主語について述語を述べたりする思考の働き。",
-history:"カントでは判断の形式がカテゴリーの手がかりとなる。ヘーゲルでは概念が判断を通じて分化し、さらに推論へと展開する。",
-related:"Begriff / Verstand / Schluss",
-field:"論理学"
-},
-schluss: {
-name:"Schluss",
-translation:"推論・三段論法",
-proposal:"文脈に応じて使い分ける",
-meaning:"複数の判断を結びつけ、結論を導く思考の形式。",
-history:"形式論理学では三段論法を意味する。ヘーゲルの論理学では、概念の展開における重要な段階として扱われる。",
-related:"Urteil / Begriff / Vernunft",
-field:"論理学"
-},
-kant: {
-name:"Kant / Hegel",
-translation:"カント / ヘーゲル",
-proposal:"人物名ではなく思想上の対比",
-meaning:"同じVernunftとVerstandでも、思想家によって意味と相互関係が異なる。",
-history:"カントは悟性と理性を区別する。悟性は経験的認識を可能にし、理性は無条件的な統一を求める。ヘーゲルは悟性の区別を否定するだけでなく、その限界を超えて理性が対立を統一する過程を重視する。",
-related:"Vernunft / Verstand / Begriff",
-field:"哲学史"
-}
-};
 
-function selectNode(id) {
-  const item = data[id];
-  if (!item) return;
+async function loadDictionary() {
+  const info = document.getElementById("info");
 
-  document.querySelectorAll(".node").forEach(node => {
-    node.classList.toggle("selected", node.dataset.id === id);
-  });
+  try {
+    const response = await fetch("./dictionary.json");
 
-  document.getElementById("info").innerHTML = `
-    <div class="tag">${item.field}</div>
-    <h2>${item.name}</h2>
-    <p><b>従来の訳：</b>${item.translation}</p>
-    <p><b>訳語の検討案：</b>${item.proposal}</p>
-    <p><b>意味：</b>${item.meaning}</p>
-    <p><b>思想史上の位置：</b>${item.history}</p>
-    <p><b>関連概念：</b>${item.related}</p>
-  `;
-}
-
-document.querySelectorAll(".node").forEach(node => {
-  node.addEventListener("click", () =>
-    selectNode(node.dataset.id)
-  );
-  node.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      selectNode(node.dataset.id);
+    if (!response.ok) {
+      throw new Error("dictionary.jsonを読み込めませんでした");
     }
-  });
-});
-  
-const relations = {
-  rv: {
-    title: "Vernunft と Verstand",
-    type: "概念上の対比・関係",
-    explanation:
-      "カントでは、悟性はカテゴリーによって経験を認識し、理性は悟性の認識をさらに統一しようとする。ヘーゲルでは、悟性が固定する区別を理性が捉え直す。両者の関係は思想家によって異なる。"
-  },
-  rb: {
-    title: "Vernunft と Begriff",
-    type: "認識能力と概念",
-    explanation:
-      "理性と概念は同じものではない。概念は対象を理解するための規定であり、理性は概念を用いた認識の全体的な関係や原理を問題にする。特にヘーゲルでは概念が重要な論理的役割を持つ。"
-  },
-  vu: {
-    title: "Verstand と Urteil",
-    type: "認識能力と判断",
-    explanation:
-      "悟性は概念やカテゴリーを用いて対象を理解する能力。判断は概念を結びつける思考形式である。カントでは判断の形式と悟性のカテゴリーが密接に関係する。"
-  },
-  bu: {
-    title: "Begriff と Urteil",
-    type: "論理的関係",
-    explanation:
-      "判断は概念を結びつける思考形式である。ヘーゲルの論理学では、概念が判断を通じて分化し、さらに推論へと展開する。"
-  },
-  us: {
-    title: "Urteil と Schluss",
-    type: "論理的展開",
-    explanation:
-      "判断は概念を結びつける。推論は複数の判断を媒介して結論を導く。ヘーゲルの論理学では、判断から推論への展開が概念の自己展開として論じられる。"
-  },
-  uh: {
-    title: "判断と思想史的展開",
-    type: "思想史上の位置づけ",
-    explanation:
-      "判断はカントとヘーゲルの双方にとって重要だが、その位置づけは異なる。カントでは認識の形式として、ヘーゲルでは概念の論理的展開の一段階として扱われる。"
-  }
-};
 
-document.querySelectorAll(".relation-edge").forEach(edge => {
-  function showRelation() {
-    const item = relations[edge.dataset.relation];
-    if (!item) return;
+    const dictionary = await response.json();
 
-    document.getElementById("info").innerHTML = `
-      <div class="tag">${item.type}</div>
-      <h2>${item.title}</h2>
-      <p><b>関係の説明：</b>${item.explanation}</p>
-      <p class="note">
-        ※関係の説明は哲学史上の一般的な整理です。
-        各思想家の著作に即した詳細な検証が必要です。
-      </p>
-    `;
+    const data = {};
+    dictionary.terms.forEach(term => {
+      data[term.id] = term;
+    });
+
+    function selectNode(id) {
+      const item = data[id];
+
+      if (!item) {
+        if (id === "kant") {
+          info.innerHTML = `
+            <div class="tag">哲学史</div>
+            <h2>Kant / Hegel</h2>
+            <p>カントとヘーゲルでは、理性と悟性の関係が異なる。</p>
+            <p>カントは両者を区別し、ヘーゲルは悟性の固定的な区別を理性が捉え直す過程を重視する。</p>
+          `;
+        }
+        return;
+      }
+
+      document.querySelectorAll(".node").forEach(node => {
+        node.classList.toggle("selected", node.dataset.id === id);
+      });
+
+      const translations = item.translation.join("、");
+      const proposals = item.proposals.length
+        ? item.proposals.join("、") + "（" + item.proposalStatus + "）"
+        : item.proposalStatus;
+
+      const related = item.related
+        .map(id => data[id]?.term || id)
+        .join("、");
+
+      info.innerHTML = `
+        <div class="tag">${item.language} / ${item.field}</div>
+        <h2>${item.term}</h2>
+        <p><b>従来の訳：</b>${translations}</p>
+        <p><b>訳語の検討案：</b>${proposals}</p>
+        <p><b>意味：</b>${item.meaning}</p>
+        <p><b>思想家：</b>${item.thinkers.join("、")}</p>
+        <p><b>関連概念：</b>${related}</p>
+      `;
+    }
 
     document.querySelectorAll(".node").forEach(node => {
-      node.classList.remove("selected");
+      node.addEventListener("click", () =>
+        selectNode(node.dataset.id)
+      );
+
+      node.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectNode(node.dataset.id);
+        }
+      });
     });
+
+    const edgePairs = {
+      rv: ["vernunft", "verstand"],
+      rb: ["vernunft", "begriff"],
+      vu: ["verstand", "urteil"],
+      bu: ["begriff", "urteil"],
+      us: ["urteil", "schluss"]
+    };
+
+    document.querySelectorAll(".relation-edge").forEach(edge => {
+      function showRelation() {
+        const pair = edgePairs[edge.dataset.relation];
+
+        const relation = pair && dictionary.relations.find(r =>
+          (r.from === pair[0] && r.to === pair[1]) ||
+          (r.from === pair[1] && r.to === pair[0])
+        );
+
+        if (relation) {
+          info.innerHTML = `
+            <div class="tag">${relation.type}</div>
+            <h2>${data[relation.from]?.term || relation.from}
+              と ${data[relation.to]?.term || relation.to}</h2>
+            <p><b>関係の説明：</b>${relation.description}</p>
+          `;
+        } else {
+          info.innerHTML = `
+            <div class="tag">思想史上の位置づけ</div>
+            <h2>判断と思想史的展開</h2>
+            <p>カントとヘーゲルでは、判断の論理学・認識論上の位置づけが異なる。</p>
+          `;
+        }
+
+        document.querySelectorAll(".node").forEach(node => {
+          node.classList.remove("selected");
+        });
+      }
+
+      edge.addEventListener("click", showRelation);
+
+      edge.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          showRelation();
+        }
+      });
+    });
+
+    selectNode("vernunft");
+
+  } catch (error) {
+    info.innerHTML = `
+      <h2>データ読み込みエラー</h2>
+      <p>${error.message}</p>
+      <p>dictionary.jsonのファイル名と保存場所を確認してください。</p>
+    `;
   }
+}
 
-  edge.addEventListener("click", showRelation);
-  edge.addEventListener("keydown", event => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      showRelation();
-    }
-  });
-});
+loadDictionary();
 
-</script>
 
 </body>
 </html>
