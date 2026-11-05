@@ -4,36 +4,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>概念翻訳辞典</title>
+<title>概念翻訳辞典｜概念ネットワーク</title>
 <style>
 body {
   font-family: sans-serif;
-  max-width: 850px;
-  margin: 50px auto;
+  max-width: 1050px;
+  margin: 35px auto;
   padding: 20px;
-  line-height: 1.8;
-  color: #292929;
   background: #fafafa;
+  color: #292929;
+  line-height: 1.7;
 }
-h1 { font-size: 30px; }
+h1 { font-size: 28px; }
+h2 { font-size: 21px; }
 .subtitle { color: #666; }
-input {
-  width: 100%;
-  padding: 14px;
-  box-sizing: border-box;
-  font-size: 16px;
-  border: 1px solid #bbb;
-  border-radius: 6px;
-}
-.entry {
+.graph {
   background: white;
-  padding: 18px;
-  margin-top: 18px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
+  padding: 12px;
+  overflow-x: auto;
 }
-.entry h2 { margin-top: 0; }
-.tag { color: #666; font-size: 13px; }
+svg {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+}
+.edge {
+  stroke: #9ba5b0;
+  stroke-width: 2;
+}
+.node { cursor: pointer; }
+.node rect {
+  fill: #f0f3f7;
+  stroke: #718096;
+  stroke-width: 1.5;
+  rx: 9;
+}
+.node.central rect {
+  fill: #e1eaf7;
+  stroke: #416b9b;
+  stroke-width: 2.5;
+}
+.node text {
+  fill: #26364a;
+  font-size: 15px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.node.selected rect {
+  fill: #d7e8ff;
+  stroke: #175da5;
+  stroke-width: 3;
+}
+.node:focus { outline: none; }
+.node:focus rect {
+  stroke: #175da5;
+  stroke-width: 3;
+}
+.info {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 18px;
+}
+.tag {
+  color: #52677d;
+  font-size: 13px;
+}
+.relation {
+  color: #315f91;
+  font-weight: bold;
+}
+.note {
+  color: #777;
+  font-size: 13px;
+}
+a { color: #315f91; }
 </style>
 </head>
 <body>
@@ -43,89 +91,180 @@ input {
 外国語の概念構造を、日本語で再発見するための辞典
 </p>
 
-<input id="search" type="text"
-placeholder="原語・日本語・関連語で検索">
+<h2>概念ネットワーク：理性と悟性</h2>
+<p>
+図の用語をクリックすると、意味・訳語・思想史上の関係が表示されます。
+</p>
 
-<div id="results"></div>
+<div class="graph">
+<svg viewBox="0 0 800 510" role="group"
+aria-label="理性と悟性を中心とした概念ネットワーク">
+
+<!-- 関係を示す線 -->
+<g class="edges">
+<line class="edge" x1="400" y1="85" x2="205" y2="205"/>
+<line class="edge" x1="400" y1="85" x2="595" y2="205"/>
+<line class="edge" x1="205" y1="205" x2="400" y2="335"/>
+<line class="edge" x1="595" y1="205" x2="400" y2="335"/>
+<line class="edge" x1="400" y1="335" x2="205" y2="445"/>
+<line class="edge" x1="400" y1="335" x2="595" y2="445"/>
+</g>
+
+<!-- 中央：理性 -->
+<g class="node central selected" data-id="vernunft"
+tabindex="0" role="button" aria-label="Vernunft">
+<rect x="300" y="35" width="200" height="75"/>
+<text x="400" y="65">Vernunft</text>
+<text x="400" y="91">理性</text>
+</g>
+
+<!-- 左：悟性 -->
+<g class="node" data-id="verstand"
+tabindex="0" role="button" aria-label="Verstand">
+<rect x="105" y="170" width="200" height="75"/>
+<text x="205" y="200">Verstand</text>
+<text x="205" y="226">悟性</text>
+</g>
+
+<!-- 右：概念 -->
+<g class="node" data-id="begriff"
+tabindex="0" role="button" aria-label="Begriff">
+<rect x="495" y="170" width="200" height="75"/>
+<text x="595" y="200">Begriff</text>
+<text x="595" y="226">概念</text>
+</g>
+
+<!-- 中央下：判断 -->
+<g class="node" data-id="urteil"
+tabindex="0" role="button" aria-label="Urteil">
+<rect x="300" y="300" width="200" height="75"/>
+<text x="400" y="330">Urteil</text>
+<text x="400" y="356">判断</text>
+</g>
+
+<!-- 左下：推論 -->
+<g class="node" data-id="schluss"
+tabindex="0" role="button" aria-label="Schluss">
+<rect x="105" y="410" width="200" height="75"/>
+<text x="205" y="440">Schluss</text>
+<text x="205" y="466">推論・三段論法</text>
+</g>
+
+<!-- 右下：カント・ヘーゲル -->
+<g class="node" data-id="kant"
+tabindex="0" role="button" aria-label="Kant">
+<rect x="495" y="410" width="200" height="75"/>
+<text x="595" y="440">Kant / Hegel</text>
+<text x="595" y="466">思想史上の展開</text>
+</g>
+</svg>
+</div>
+
+<div class="info" id="info" aria-live="polite">
+<div class="tag">ドイツ語 / ドイツ観念論</div>
+<h2>Vernunft（理性）</h2>
+<p><b>従来の訳：</b> 理性</p>
+<p><b>訳語の検討案：</b> 統合理性（試案）</p>
+<p><b>意味：</b> 個別の認識を超え、認識の全体的な関係や原理を考える能力。</p>
+<p><b>関連概念：</b> Verstand、Begriff、Urteil</p>
+<p><b>思想史上の位置：</b> カントとヘーゲルでは、悟性との関係が異なる。</p>
+</div>
+
+<p class="note">
+※ 図の線は概念間の関連を示す模式図です。
+すべてが同じ種類の関係や直接的な派生関係を意味するわけではありません。
+</p>
 
 <script>
-const words = [
-{
-term: "Aufhebung",
-language: "ドイツ語",
-field: "ヘーゲル哲学",
-translation: "止揚",
-proposal: "保存的超克（試案）",
-meaning: "廃棄・保存・高次への移行という複数の意味を持つ。",
-related: "Negation, Vermittlung, Hegel"
+const data = {
+vernunft: {
+name:"Vernunft",
+translation:"理性",
+proposal:"統合理性（試案）",
+meaning:"個別の認識を超え、認識の全体的な関係や原理を考える能力。",
+history:"カントでは、悟性による認識をさらに統一し、無条件的なものを求める能力。ヘーゲルでは、悟性の固定的な区別を超えて、対立や矛盾を含む全体を把握する理性的な働きとして論じられる。",
+related:"Verstand / Begriff / Urteil",
+field:"ドイツ観念論"
 },
-{
-term: "Vernunft",
-language: "ドイツ語",
-field: "ドイツ観念論",
-translation: "理性",
-proposal: "統合理性（試案）",
-meaning: "個別の認識を超えて、全体的な関係や原理を捉える能力。",
-related: "Verstand, Kant, Hegel"
+verstand: {
+name:"Verstand",
+translation:"悟性",
+proposal:"分析知性（試案）",
+meaning:"対象を区別し、規定し、概念やカテゴリーによって理解する能力。",
+history:"カントでは感性的直観をカテゴリーによって統一する認識能力。ヘーゲルでは、物事を区別し固定する思考の働きとして、理性との対比で論じられる。",
+related:"Vernunft / Urteil / Begriff",
+field:"認識論・ドイツ観念論"
 },
-{
-term: "Verstand",
-language: "ドイツ語",
-field: "ドイツ観念論",
-translation: "悟性",
-proposal: "分析知性（試案）",
-meaning: "対象を区別し、規定し、概念によって理解する能力。",
-related: "Vernunft, Begriff, Kant"
+begriff: {
+name:"Begriff",
+translation:"概念",
+proposal:"既存訳を基本とする",
+meaning:"対象を単に名指すだけでなく、対象を理解するための規定や把握の形式。",
+history:"カントでは悟性の概念が認識に関わる。ヘーゲルでは概念は思考の根本的な構造であり、普遍・特殊・個別の統一として展開される。",
+related:"Vernunft / Verstand / Urteil",
+field:"論理学・ドイツ観念論"
 },
-{
-term: "Alienation",
-language: "英語",
-field: "哲学・社会思想",
-translation: "疎外",
-proposal: "自己離反（試案）",
-meaning: "人間が自らの活動やその成果から切り離され、よそよそしい関係になること。",
-related: "Marx, Entfremdung, Reification"
+urteil: {
+name:"Urteil",
+translation:"判断",
+proposal:"既存訳を基本とする",
+meaning:"概念を結びつけたり、主語について述語を述べたりする思考の働き。",
+history:"カントでは判断の形式がカテゴリーの手がかりとなる。ヘーゲルでは概念が判断を通じて分化し、さらに推論へと展開する。",
+related:"Begriff / Verstand / Schluss",
+field:"論理学"
 },
-{
-term: "Reason",
-language: "英語",
-field: "哲学",
-translation: "理由・理性",
-proposal: "文脈によって区別",
-meaning: "根拠や理由を意味する場合と、理性的な思考能力を意味する場合がある。",
-related: "Rationality, Reasoning, Reasonable"
+schluss: {
+name:"Schluss",
+translation:"推論・三段論法",
+proposal:"文脈に応じて使い分ける",
+meaning:"複数の判断を結びつけ、結論を導く思考の形式。",
+history:"形式論理学では三段論法を意味する。ヘーゲルの論理学では、概念の展開における重要な段階として扱われる。",
+related:"Urteil / Begriff / Vernunft",
+field:"論理学"
+},
+kant: {
+name:"Kant / Hegel",
+translation:"カント / ヘーゲル",
+proposal:"人物名ではなく思想上の対比",
+meaning:"同じVernunftとVerstandでも、思想家によって意味と相互関係が異なる。",
+history:"カントは悟性と理性を区別する。悟性は経験的認識を可能にし、理性は無条件的な統一を求める。ヘーゲルは悟性の区別を否定するだけでなく、その限界を超えて理性が対立を統一する過程を重視する。",
+related:"Vernunft / Verstand / Begriff",
+field:"哲学史"
 }
-];
+};
 
-function showWords() {
-  const query = document.getElementById("search")
-    .value.toLowerCase();
+function selectNode(id) {
+  const item = data[id];
+  if (!item) return;
 
-  const results = words.filter(w =>
-    Object.values(w).join(" ").toLowerCase()
-      .includes(query)
+  document.querySelectorAll(".node").forEach(node => {
+    node.classList.toggle("selected", node.dataset.id === id);
+  });
+
+  document.getElementById("info").innerHTML = `
+    <div class="tag">${item.field}</div>
+    <h2>${item.name}</h2>
+    <p><b>従来の訳：</b>${item.translation}</p>
+    <p><b>訳語の検討案：</b>${item.proposal}</p>
+    <p><b>意味：</b>${item.meaning}</p>
+    <p><b>思想史上の位置：</b>${item.history}</p>
+    <p><b>関連概念：</b>${item.related}</p>
+  `;
+}
+
+document.querySelectorAll(".node").forEach(node => {
+  node.addEventListener("click", () =>
+    selectNode(node.dataset.id)
   );
-
-  document.getElementById("results").innerHTML =
-    results.length
-    ? results.map(w => `
-      <div class="entry">
-        <h2>${w.term}</h2>
-        <div class="tag">${w.language} / ${w.field}</div>
-        <p><b>従来の訳：</b>${w.translation}</p>
-        <p><b>訳語の提案：</b>${w.proposal}</p>
-        <p><b>意味：</b>${w.meaning}</p>
-        <p><b>関連概念：</b>${w.related}</p>
-      </div>
-    `).join("")
-    : "<p>該当する用語はありません。</p>";
-}
-
-document.getElementById("search")
-  .addEventListener("input", showWords);
-
-showWords();
+  node.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      selectNode(node.dataset.id);
+    }
+  });
+});
 </script>
 
 </body>
 </html>
+
