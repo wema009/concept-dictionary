@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>概念翻訳辞典</title>
+<style>
+body {
+  font-family: sans-serif;
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 20px;
+  line-height: 1.8;
+  color: #292929;
+  background: #fafafa;
+}
+h1 { font-size: 30px; }
+.subtitle { color: #666; }
+input {
+  width: 100%;
+  padding: 14px;
+  box-sizing: border-box;
+  font-size: 16px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+.entry {
+  background: white;
+  padding: 18px;
+  margin-top: 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.entry h2 { margin-top: 0; }
+.tag { color: #666; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>概念翻訳辞典</h1>
+<p class="subtitle">
+外国語の概念構造を、日本語で再発見するための辞典
+</p>
+
+<input id="search" type="text"
+placeholder="原語・日本語・関連語で検索">
+
+<div id="results"></div>
+
+<script>
+const words = [
+{
+term: "Aufhebung",
+language: "ドイツ語",
+field: "ヘーゲル哲学",
+translation: "止揚",
+proposal: "保存的超克（試案）",
+meaning: "廃棄・保存・高次への移行という複数の意味を持つ。",
+related: "Negation, Vermittlung, Hegel"
+},
+{
+term: "Vernunft",
+language: "ドイツ語",
+field: "ドイツ観念論",
+translation: "理性",
+proposal: "統合理性（試案）",
+meaning: "個別の認識を超えて、全体的な関係や原理を捉える能力。",
+related: "Verstand, Kant, Hegel"
+},
+{
+term: "Verstand",
+language: "ドイツ語",
+field: "ドイツ観念論",
+translation: "悟性",
+proposal: "分析知性（試案）",
+meaning: "対象を区別し、規定し、概念によって理解する能力。",
+related: "Vernunft, Begriff, Kant"
+},
+{
+term: "Alienation",
+language: "英語",
+field: "哲学・社会思想",
+translation: "疎外",
+proposal: "自己離反（試案）",
+meaning: "人間が自らの活動やその成果から切り離され、よそよそしい関係になること。",
+related: "Marx, Entfremdung, Reification"
+},
+{
+term: "Reason",
+language: "英語",
+field: "哲学",
+translation: "理由・理性",
+proposal: "文脈によって区別",
+meaning: "根拠や理由を意味する場合と、理性的な思考能力を意味する場合がある。",
+related: "Rationality, Reasoning, Reasonable"
+}
+];
+
+function showWords() {
+  const query = document.getElementById("search")
+    .value.toLowerCase();
+
+  const results = words.filter(w =>
+    Object.values(w).join(" ").toLowerCase()
+      .includes(query)
+  );
+
+  document.getElementById("results").innerHTML =
+    results.length
+    ? results.map(w => `
+      <div class="entry">
+        <h2>${w.term}</h2>
+        <div class="tag">${w.language} / ${w.field}</div>
+        <p><b>従来の訳：</b>${w.translation}</p>
+        <p><b>訳語の提案：</b>${w.proposal}</p>
+        <p><b>意味：</b>${w.meaning}</p>
+        <p><b>関連概念：</b>${w.related}</p>
+      </div>
+    `).join("")
+    : "<p>該当する用語はありません。</p>";
+}
+
+document.getElementById("search")
+  .addEventListener("input", showWords);
+
+showWords();
+</script>
+
+</body>
+</html>
