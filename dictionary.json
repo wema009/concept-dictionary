@@ -1,0 +1,102 @@
+
+{
+  "terms": [
+    {
+      "id": "vernunft",
+      "term": "Vernunft",
+      "language": "ドイツ語",
+      "field": "ドイツ観念論",
+      "translation": ["理性"],
+      "proposals": ["統合理性"],
+      "proposalStatus": "試案",
+      "meaning": "個別の認識を超え、認識の全体的な関係や原理を考える能力。",
+      "thinkers": ["カント", "ヘーゲル"],
+      "related": ["verstand", "begriff", "urteil"],
+      "sources": []
+    },
+    {
+      "id": "verstand",
+      "term": "Verstand",
+      "language": "ドイツ語",
+      "field": "ドイツ観念論",
+      "translation": ["悟性"],
+      "proposals": ["分析知性"],
+      "proposalStatus": "試案",
+      "meaning": "対象を区別し、規定し、カテゴリーや概念によって理解する能力。",
+      "thinkers": ["カント", "ヘーゲル"],
+      "related": ["vernunft", "begriff", "urteil"],
+      "sources": []
+    },
+    {
+      "id": "begriff",
+      "term": "Begriff",
+      "language": "ドイツ語",
+      "field": "論理学・ドイツ観念論",
+      "translation": ["概念"],
+      "proposals": [],
+      "proposalStatus": "既存訳を基本とする",
+      "meaning": "対象を理解するための規定や把握の形式。ヘーゲルでは論理学の中心概念。",
+      "thinkers": ["カント", "ヘーゲル"],
+      "related": ["vernunft", "verstand", "urteil"],
+      "sources": []
+    },
+    {
+      "id": "urteil",
+      "term": "Urteil",
+      "language": "ドイツ語",
+      "field": "論理学",
+      "translation": ["判断"],
+      "proposals": [],
+      "proposalStatus": "既存訳を基本とする",
+      "meaning": "概念を結びつけ、対象について何かを述べる思考形式。",
+      "thinkers": ["カント", "ヘーゲル"],
+      "related": ["begriff", "verstand", "schluss"],
+      "sources": []
+    },
+    {
+      "id": "schluss",
+      "term": "Schluss",
+      "language": "ドイツ語",
+      "field": "論理学",
+      "translation": ["推論", "三段論法"],
+      "proposals": [],
+      "proposalStatus": "文脈に応じて使い分ける",
+      "meaning": "複数の判断を結びつけ、結論を導く思考形式。",
+      "thinkers": ["ヘーゲル"],
+      "related": ["urteil", "begriff"],
+      "sources": []
+    }
+  ],
+  "relations": [
+    {
+      "from": "vernunft",
+      "to": "verstand",
+      "type": "対比・思想上の関係",
+      "description": "カントでは悟性と理性を区別する。ヘーゲルでは悟性の固定的な区別を理性が捉え直す。"
+    },
+    {
+      "from": "vernunft",
+      "to": "begriff",
+      "type": "概念的関係",
+      "description": "理性と概念は同一ではない。概念は対象を理解する規定であり、理性は認識の全体的な関係を問題にする。"
+    },
+    {
+      "from": "verstand",
+      "to": "urteil",
+      "type": "認識論的関係",
+      "description": "カントでは判断の形式と悟性のカテゴリーが密接に関係する。"
+    },
+    {
+      "from": "begriff",
+      "to": "urteil",
+      "type": "論理的展開",
+      "description": "ヘーゲルでは概念が判断を通じて分化し、さらに推論へと展開する。"
+    },
+    {
+      "from": "urteil",
+      "to": "schluss",
+      "type": "論理的展開",
+      "description": "判断を媒介して結論を導くのが推論である。ヘーゲルの論理学では概念の展開として論じられる。"
+    }
+  ]
+}
