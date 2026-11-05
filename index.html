@@ -34,6 +34,31 @@ svg {
   stroke: #9ba5b0;
   stroke-width: 2;
 }
+  
+.relation-edge {
+  cursor: pointer;
+}
+.relation-edge .hit {
+  stroke: transparent;
+  stroke-width: 20;
+  pointer-events: stroke;
+}
+.relation-edge text {
+  font-size: 12px;
+  fill: #315f91;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: white;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.relation-edge:focus .edge,
+.relation-edge:hover .edge {
+  stroke: #175da5;
+  stroke-width: 4;
+}
+
 .node { cursor: pointer; }
 .node rect {
   fill: #f0f3f7;
@@ -101,14 +126,46 @@ a { color: #315f91; }
 aria-label="理性と悟性を中心とした概念ネットワーク">
 
 <!-- 関係を示す線 -->
+
 <g class="edges">
-<line class="edge" x1="400" y1="85" x2="205" y2="205"/>
-<line class="edge" x1="400" y1="85" x2="595" y2="205"/>
-<line class="edge" x1="205" y1="205" x2="400" y2="335"/>
-<line class="edge" x1="595" y1="205" x2="400" y2="335"/>
-<line class="edge" x1="400" y1="335" x2="205" y2="445"/>
-<line class="edge" x1="400" y1="335" x2="595" y2="445"/>
+  <g class="relation-edge" data-relation="rv"
+     tabindex="0" role="button">
+    <line class="edge" x1="400" y1="85" x2="205" y2="205"/>
+    <line class="hit" x1="400" y1="85" x2="205" y2="205"/>
+    <text x="295" y="137">区別と関係</text>
+  </g>
+  <g class="relation-edge" data-relation="rb"
+     tabindex="0" role="button">
+    <line class="edge" x1="400" y1="85" x2="595" y2="205"/>
+    <line class="hit" x1="400" y1="85" x2="595" y2="205"/>
+    <text x="505" y="137">理性と概念</text>
+  </g>
+  <g class="relation-edge" data-relation="vu"
+     tabindex="0" role="button">
+    <line class="edge" x1="205" y1="205" x2="400" y2="335"/>
+    <line class="hit" x1="205" y1="205" x2="400" y2="335"/>
+    <text x="285" y="277">悟性と判断</text>
+  </g>
+  <g class="relation-edge" data-relation="bu"
+     tabindex="0" role="button">
+    <line class="edge" x1="595" y1="205" x2="400" y2="335"/>
+    <line class="hit" x1="595" y1="205" x2="400" y2="335"/>
+    <text x="510" y="277">概念と判断</text>
+  </g>
+  <g class="relation-edge" data-relation="us"
+     tabindex="0" role="button">
+    <line class="edge" x1="400" y1="335" x2="205" y2="445"/>
+    <line class="hit" x1="400" y1="335" x2="205" y2="445"/>
+    <text x="290" y="397">判断と推論</text>
+  </g>
+  <g class="relation-edge" data-relation="uh"
+     tabindex="0" role="button">
+    <line class="edge" x1="400" y1="335" x2="595" y2="445"/>
+    <line class="hit" x1="400" y1="335" x2="595" y2="445"/>
+    <text x="505" y="397">思想史的展開</text>
+  </g>
 </g>
+
 
 <!-- 中央：理性 -->
 <g class="node central selected" data-id="vernunft"
@@ -263,6 +320,75 @@ document.querySelectorAll(".node").forEach(node => {
     }
   });
 });
+  
+const relations = {
+  rv: {
+    title: "Vernunft と Verstand",
+    type: "概念上の対比・関係",
+    explanation:
+      "カントでは、悟性はカテゴリーによって経験を認識し、理性は悟性の認識をさらに統一しようとする。ヘーゲルでは、悟性が固定する区別を理性が捉え直す。両者の関係は思想家によって異なる。"
+  },
+  rb: {
+    title: "Vernunft と Begriff",
+    type: "認識能力と概念",
+    explanation:
+      "理性と概念は同じものではない。概念は対象を理解するための規定であり、理性は概念を用いた認識の全体的な関係や原理を問題にする。特にヘーゲルでは概念が重要な論理的役割を持つ。"
+  },
+  vu: {
+    title: "Verstand と Urteil",
+    type: "認識能力と判断",
+    explanation:
+      "悟性は概念やカテゴリーを用いて対象を理解する能力。判断は概念を結びつける思考形式である。カントでは判断の形式と悟性のカテゴリーが密接に関係する。"
+  },
+  bu: {
+    title: "Begriff と Urteil",
+    type: "論理的関係",
+    explanation:
+      "判断は概念を結びつける思考形式である。ヘーゲルの論理学では、概念が判断を通じて分化し、さらに推論へと展開する。"
+  },
+  us: {
+    title: "Urteil と Schluss",
+    type: "論理的展開",
+    explanation:
+      "判断は概念を結びつける。推論は複数の判断を媒介して結論を導く。ヘーゲルの論理学では、判断から推論への展開が概念の自己展開として論じられる。"
+  },
+  uh: {
+    title: "判断と思想史的展開",
+    type: "思想史上の位置づけ",
+    explanation:
+      "判断はカントとヘーゲルの双方にとって重要だが、その位置づけは異なる。カントでは認識の形式として、ヘーゲルでは概念の論理的展開の一段階として扱われる。"
+  }
+};
+
+document.querySelectorAll(".relation-edge").forEach(edge => {
+  function showRelation() {
+    const item = relations[edge.dataset.relation];
+    if (!item) return;
+
+    document.getElementById("info").innerHTML = `
+      <div class="tag">${item.type}</div>
+      <h2>${item.title}</h2>
+      <p><b>関係の説明：</b>${item.explanation}</p>
+      <p class="note">
+        ※関係の説明は哲学史上の一般的な整理です。
+        各思想家の著作に即した詳細な検証が必要です。
+      </p>
+    `;
+
+    document.querySelectorAll(".node").forEach(node => {
+      node.classList.remove("selected");
+    });
+  }
+
+  edge.addEventListener("click", showRelation);
+  edge.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      showRelation();
+    }
+  });
+});
+
 </script>
 
 </body>
